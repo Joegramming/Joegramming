@@ -113,34 +113,29 @@ I'm one of the developers behind **[Cre8tive Sync](https://cre8tivesync.online)*
   <img alt="" src="https://raw.githubusercontent.com/Joegramming/Joegramming/main/assets/divider-dark.svg" width="100%">
 </picture>
 
-### Numbers
+<h3><picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/main/assets/header-numbers-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/main/assets/header-numbers-light.svg">
+  <img alt="Numbers" src="https://raw.githubusercontent.com/Joegramming/Joegramming/main/assets/header-numbers-dark.svg" width="100%">
+</picture></h3>
 
-<div align="center">
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api?username=Joegramming&bg_color=111B17&title_color=E8EFEA&text_color=A3B5AC&icon_color=F2A33A&border_color=2C3B35&border_radius=12&show_icons=true&ring_color=F2A33A&disable_animations=true&custom_title=Joe+on+GitHub&count_private=true">
-  <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api?username=Joegramming&bg_color=F4F7F5&title_color=13201B&text_color=4C5F56&icon_color=B8560B&border_color=CBD8D1&border_radius=12&show_icons=true&ring_color=B8560B&disable_animations=true&custom_title=Joe+on+GitHub&count_private=true">
-  <img alt="Joe's GitHub stats" src="https://github-readme-stats.vercel.app/api?username=Joegramming&bg_color=111B17&title_color=E8EFEA&text_color=A3B5AC&icon_color=F2A33A&border_color=2C3B35&border_radius=12&show_icons=true&ring_color=F2A33A&disable_animations=true&custom_title=Joe+on+GitHub&count_private=true">
-</picture>
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=Joegramming&bg_color=111B17&title_color=E8EFEA&text_color=A3B5AC&icon_color=F2A33A&border_color=2C3B35&border_radius=12&layout=compact&langs_count=8&card_width=450&disable_animations=true">
-  <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=Joegramming&bg_color=F4F7F5&title_color=13201B&text_color=4C5F56&icon_color=B8560B&border_color=CBD8D1&border_radius=12&layout=compact&langs_count=8&card_width=450&disable_animations=true">
-  <img alt="Top languages" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Joegramming&bg_color=111B17&title_color=E8EFEA&text_color=A3B5AC&icon_color=F2A33A&border_color=2C3B35&border_radius=12&layout=compact&langs_count=8&card_width=450&disable_animations=true">
-</picture>
-
-<picture>
+<p><picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/output/numbers-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/output/numbers-light.svg">
-  <img alt="Contributions, private client work and busiest day" src="https://raw.githubusercontent.com/Joegramming/Joegramming/output/numbers-dark.svg" width="450">
-</picture>
+  <img alt="Contributions, private client work and busiest day" src="https://raw.githubusercontent.com/Joegramming/Joegramming/output/numbers-dark.svg" width="100%">
+</picture></p>
 
-<picture>
+<p><picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/output/contrib-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/output/contrib-light.svg">
-  <img alt="3D contribution calendar: one block per day, height by contributions" src="https://raw.githubusercontent.com/Joegramming/Joegramming/output/contrib-dark.svg" width="100%">
-</picture>
+  <img alt="Contribution skyline: one block per day, orange marks the busiest day" src="https://raw.githubusercontent.com/Joegramming/Joegramming/output/contrib-dark.svg" width="100%">
+</picture></p>
 
-</div>
+<p><picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/output/languages-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/output/languages-light.svg">
+  <img alt="Top languages, built with React and Three.js" src="https://raw.githubusercontent.com/Joegramming/Joegramming/output/languages-dark.svg" width="100%">
+</picture></p>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/main/assets/divider-dark.svg">

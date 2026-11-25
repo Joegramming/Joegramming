@@ -10,6 +10,9 @@ PAL = {
                   levels=["#E4EBE6", "#C3D1C9", "#93AB9E", "#56705F", "#2E4438"]),
 }
 REDUCED = "@media (prefers-reduced-motion: reduce){*{animation:none!important}}"
+FONT = "'Bricolage Grotesque', 'Arial Narrow', sans-serif"
+FONT_CSS = ""  # @font-face rules; numbers.py loads them from .github/numbers/fonts.css
+TOP = 64  # title row height on every card
 
 def grid(days):
     """-> list of (week, weekday, count); week index from the first day."""
@@ -20,12 +23,29 @@ def grid(days):
         out.append((week, d["weekday"], d["contributionCount"]))
     return out
 
-def trim(cells, min_weeks=13):
-    """Start at the first active week (at least min_weeks shown) so a young account isn't mostly flat."""
+def _start(cells, min_weeks=13):
     active = [wk for wk, _, n in cells if n]
     last = max(wk for wk, _, _ in cells)
-    start = max(0, min(active[0] if active else 0, last + 1 - min_weeks))
+    return max(0, min(active[0] if active else 0, last + 1 - min_weeks))
+
+def trim(cells):
+    """Start at the first active week (at least 13 shown) so a young account isn't mostly flat."""
+    start = _start(cells)
     return [(wk - start, wd, n) for wk, wd, n in cells if wk >= start]
+
+def window(days):
+    """'last 12 months', or 'since <first shown day>' while the history is trimmed."""
+    start = _start(grid(days))
+    if start == 0:
+        return "last 12 months"
+    week = 0
+    for i, d in enumerate(days):
+        if i and d["weekday"] == 0:
+            week += 1
+        if week == start:
+            y, m, dd = (int(x) for x in d["date"].split("-"))
+            return "since %s %d, %d" % (("Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split())[m - 1], dd, y)
+    return "last 12 months"
 
 def busiest(cells):
     return max(cells, key=lambda c: (c[2], c[0], c[1]))
@@ -55,7 +75,34 @@ def smooth(pts):
 
 def svg(w, h, title, body):
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img" aria-labelledby="t">'
-            f'<title id="t">{title}</title>{body}</svg>')
+            f'<title id="t">{title}</title><style>{FONT_CSS}</style>{body}</svg>')
+
+def esc(s):
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+def heading(c, title, sub):
+    return (f'<text x="48" y="54" font-family="{FONT}" font-size="31" font-weight="500" fill="{c["ink"]}">{esc(title)}'
+            f'<tspan font-weight="500" fill="{c["soft"]}"> — {esc(sub)}</tspan></text>')
+
+def legend(c, W, busiest_label="busiest day"):
+    """Right-aligned: fewer [ramp] more · [amber] busiest day."""
+    x = W - 48
+    out = [f'<text x="{x}" y="52" text-anchor="end" font-family="{FONT}" font-size="21" font-weight="500" fill="{c["soft"]}">{busiest_label}</text>']
+    x -= 150
+    out.append(f'<rect x="{x}" y="35" width="18" height="18" rx="4" fill="{c["lamp"]}"/>')
+    x -= 24
+    out.append(f'<text x="{x}" y="52" text-anchor="end" font-family="{FONT}" font-size="21" font-weight="500" fill="{c["soft"]}">more</text>')
+    x -= 82
+    for col in reversed(c["levels"][1:]):
+        out.append(f'<rect x="{x}" y="35" width="18" height="18" rx="4" fill="{col}"/>')
+        x -= 24
+    out.append(f'<text x="{x + 16}" y="52" text-anchor="end" font-family="{FONT}" font-size="21" font-weight="500" fill="{c["soft"]}">fewer</text>')
+    return "".join(out)
+
+def framed(c, W, H, title, sub, inner, with_legend=True):
+    """Card frame + title row; inner drawing is shifted below the title row."""
+    return (frame(c, W, H) + heading(c, title, sub) + (legend(c, W) if with_legend else "")
+            + f'<g transform="translate(0 {TOP})">{inner}</g>')
 
 # ---- A. contribution ridges: one filled ridgeline per weekday, front ridges hide back ones ---
 def terrain(days, theme):
@@ -114,9 +161,12 @@ def blocks(days, theme):
     for wk in sorted(weeks):
         parts = "".join(p for _, p in sorted(weeks[wk], key=lambda t: -t[0]))  # back to front
         groups.append(f'<g class="g" style="animation-delay:{wk * 28}ms">{parts}</g>')
-    body = frame(c, W, H) + f'''<style>.g{{transform-box:fill-box;transform-origin:50% 100%;animation:grow 1.1s cubic-bezier(.16,1,.3,1) both}}@keyframes grow{{from{{transform:scaleY(0)}}to{{transform:scaleY(1)}}}}{REDUCED}</style>
+    inner = f'''<style>.g{{transform-box:fill-box;transform-origin:50% 100%;animation:grow 1.1s cubic-bezier(.16,1,.3,1) both}}@keyframes grow{{from{{transform:scaleY(0)}}to{{transform:scaleY(1)}}}}{REDUCED}</style>
 {"".join(groups)}'''
-    return svg(W, H, f"{sum(x[2] for x in cells)} contributions in the last year as isometric blocks, one per day. Busiest day: {bn}.", body)
+    win = window(days)
+    Ht = H - 30 + TOP  # the old top margin becomes the title row
+    body = framed(c, W, Ht, "Contribution skyline", win, f'<g transform="translate(0 -30)">{inner}</g>')
+    return svg(W, Ht, f"Contribution skyline, {win}: one block per day, taller and lighter blocks mean more contributions. Busiest day (orange): {bn}.", body)
 
 # ---- C. contribution ring: the year wrapped into a rotating 3D ring of spikes --------------
 def ring(days, theme, frames=24, dur=36):
@@ -145,5 +195,40 @@ def ring(days, theme, frames=24, dur=36):
         anim += f'<animate attributeName="x2" dur="{dur}s" repeatCount="indefinite" values="{";".join(vals["x1"])}"/>'
         spikes.append(f'<line x1="{vals["x1"][0]}" x2="{vals["x1"][0]}" y1="{vals["y1"][0]}" y2="{vals["y2"][0]}" stroke="{c["lamp"] if hot else c["mesh"]}" stroke-width="{6 if hot else 4.5}" stroke-linecap="round">{anim}</line>')
     floor = "".join(f'<ellipse cx="{cx}" cy="{cy}" rx="{R + k * dr}" ry="{(R + k * dr) * tilt:.1f}" fill="none" stroke="{c["line"]}" stroke-width="1"/>' for k in (-3, 0, 3))
-    body = f'{frame(c, W, H)}{floor}{"".join(spikes)}'
-    return svg(W, H, f"{sum(x[2] for x in cells)} contributions in the last year wrapped into a rotating ring. Tallest spike: {bn}.", body)
+    win = window(days)
+    Ht = H - 20 + TOP
+    body = framed(c, W, Ht, "Contribution ring", win, f'<g transform="translate(0 -20)">{floor}{"".join(spikes)}</g>')
+    return svg(W, Ht, f"Contribution ring, {win}: one spike per active day, taller means more contributions. Busiest day (orange): {bn}.", body)
+
+# ---- languages card -----------------------------------------------------------------------
+def languages(langs, theme, frameworks=("React", "Three.js"), top=5):
+    """langs: [(name, bytes)] sorted desc, already filtered. Shares are of all listed bytes."""
+    c = PAL[theme]
+    W, H = 1200, 250
+    total = sum(b for _, b in langs) or 1
+    shown = langs[:top]
+    ramp = (["#DCE6E0", "#A9BDB3", "#7C9A8C", "#56705F", "#3A5247"] if theme == "dark"
+            else ["#13201B", "#2E4438", "#56705F", "#7F978B", "#AFC2B8"])
+    x, bar_w, segs, items, lx = 48.0, W - 96, [], [], 48.0
+    for i, (name, b) in enumerate(shown):
+        w = bar_w * b / total
+        segs.append(f'<rect x="{x:.1f}" y="88" width="{max(w, 3):.1f}" height="22" fill="{ramp[i]}"/>')
+        x += w
+        label = f"{name} {100 * b / total:.1f}%"
+        items.append(f'<rect x="{lx:.0f}" y="140" width="18" height="18" rx="4" fill="{ramp[i]}"/>'
+                     f'<text x="{lx + 28:.0f}" y="157" font-family="{FONT}" font-size="24" font-weight="500" fill="{c["ink"]}">{esc(name)}'
+                     f'<tspan fill="{c["soft"]}"> {100 * b / total:.1f}%</tspan></text>')
+        lx += 28 + 12.5 * len(label) + 44  # shortcut: estimated glyph width; fine for short language names
+    chips, cx = [], 48 + 150
+    for fw in frameworks:
+        wpx = 26 + 13 * len(fw)
+        chips.append(f'<rect x="{cx}" y="182" width="{wpx}" height="38" rx="19" fill="none" stroke="{c["mesh"]}" stroke-width="2"/>'
+                     f'<text x="{cx + wpx / 2}" y="208" text-anchor="middle" font-family="{FONT}" font-size="21" font-weight="500" fill="{c["ink"]}">{esc(fw)}</text>')
+        cx += wpx + 12
+    body = f'''{frame(c, W, H)}{heading(c, "Top languages", "public repos, by code size")}
+<clipPath id="bar"><rect x="48" y="88" width="{bar_w}" height="22" rx="11"/></clipPath>
+<rect x="48" y="88" width="{bar_w}" height="22" rx="11" fill="{c['line']}"/><g clip-path="url(#bar)">{"".join(segs)}</g>
+{"".join(items)}
+<text x="48" y="208" font-family="{FONT}" font-size="21" font-weight="500" fill="{c['soft']}">Built with</text>{"".join(chips)}'''
+    summary = ", ".join(f"{n} {100 * b / total:.1f}%" for n, b in shown)
+    return svg(W, H, f"Top languages in public repos: {summary}. Built with {' and '.join(frameworks)}.", body)
