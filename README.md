@@ -135,9 +135,9 @@ I'm one of the developers behind **[Cre8tive Sync](https://cre8tivesync.online)*
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/output/snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/output/snake-light.svg">
-  <img alt="Contribution snake" src="https://raw.githubusercontent.com/Joegramming/Joegramming/output/snake-dark.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/output/contrib-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/output/contrib-light.svg">
+  <img alt="3D contribution calendar: one block per day, height by contributions" src="https://raw.githubusercontent.com/Joegramming/Joegramming/output/contrib-dark.svg" width="100%">
 </picture>
 
 </div>

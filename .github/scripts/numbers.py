@@ -1,13 +1,16 @@
-"""Fill the numbers card from the GitHub GraphQL API (runs nightly in the snake workflow).
+"""Build the numbers card and the 3D contribution calendar from the GitHub GraphQL API (runs nightly).
 
-Usage: GITHUB_TOKEN=... GH_USER=... python numbers.py <template-dir> <out-dir>
+Usage: GITHUB_TOKEN=... GH_USER=... [CONTRIB_STYLE=blocks|ring|terrain] python numbers.py <template-dir> <out-dir>
 Private contributions only count when "Include private contributions on my profile" is on.
 """
 import datetime, json, os, sys, urllib.request
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import contrib3d
+
 QUERY = """query($login: String!) { user(login: $login) { contributionsCollection {
   restrictedContributionsCount
-  contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } }
+  contributionCalendar { totalContributions weeks { contributionDays { date contributionCount weekday } } }
 } } }"""
 
 def fetch(user, token):
@@ -38,11 +41,17 @@ def fill(template, vals):
 
 if __name__ == "__main__":
     src, out = sys.argv[1], sys.argv[2]
-    vals = values(fetch(os.environ["GH_USER"], os.environ["GITHUB_TOKEN"]))
+    cc = fetch(os.environ["GH_USER"], os.environ["GITHUB_TOKEN"])
+    vals = values(cc)
+    days = [d for w in cc["contributionCalendar"]["weeks"] for d in w["contributionDays"]]
+    style = os.environ.get("CONTRIB_STYLE", "blocks")
+    draw = {"blocks": contrib3d.blocks, "ring": contrib3d.ring, "terrain": contrib3d.terrain}[style]
     os.makedirs(out, exist_ok=True)
     for theme in ("dark", "light"):
         with open(os.path.join(src, f"numbers-{theme}.svg"), encoding="utf-8") as f:
             card = fill(f.read(), vals)
         with open(os.path.join(out, f"numbers-{theme}.svg"), "w", encoding="utf-8", newline="\n") as f:
             f.write(card)
-    print("numbers card:", vals)
+        with open(os.path.join(out, f"contrib-{theme}.svg"), "w", encoding="utf-8", newline="\n") as f:
+            f.write(draw(days, theme))
+    print("numbers card:", vals, "| contrib style:", style)
