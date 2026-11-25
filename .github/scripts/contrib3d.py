@@ -138,16 +138,16 @@ def terrain(days, theme):
 def blocks(days, theme):
     c, cells = PAL[theme], trim(grid(days))
     peak = max(1, max(x[2] for x in cells))
-    W, H, dx, dy, hmax = 1200, 300, 22, 15, 150
-    base = 285
+    W, H, dx, dy, hmax = 1400, 196, 22, 11, 100  # H = drawing area below the title row
+    base = 184
     nweeks = max(x[0] for x in cells) + 1
-    s = (W - 48 - 7 * dx) / nweeks
+    s = (W - 96 - 7 * dx) / nweeks
     gap = max(3, s * 0.18)
     bw, bd, bn = busiest(cells)
     weeks = {}
     for wk, wd, n in cells:
         depth = 6 - wd
-        x0 = 24 + wk * s + depth * dx
+        x0 = 48 + wk * s + depth * dx
         y0 = base - depth * dy
         bwid = s - gap
         h = 3 if n == 0 else 6 + (hmax - 6) * math.sqrt(n / peak)
@@ -164,15 +164,15 @@ def blocks(days, theme):
     inner = f'''<style>.g{{transform-box:fill-box;transform-origin:50% 100%;animation:grow 1.1s cubic-bezier(.16,1,.3,1) both}}@keyframes grow{{from{{transform:scaleY(0)}}to{{transform:scaleY(1)}}}}{REDUCED}</style>
 {"".join(groups)}'''
     win = window(days)
-    Ht = H - 30 + TOP  # the old top margin becomes the title row
-    body = framed(c, W, Ht, "Contribution skyline", win, f'<g transform="translate(0 -30)">{inner}</g>')
+    Ht = H + TOP
+    body = framed(c, W, Ht, "Contribution skyline", win, inner)
     return svg(W, Ht, f"Contribution skyline, {win}: one block per day, taller and lighter blocks mean more contributions. Busiest day (orange): {bn}.", body)
 
 # ---- C. contribution ring: the year wrapped into a rotating 3D ring of spikes --------------
 def ring(days, theme, frames=24, dur=36):
     c, cells = PAL[theme], trim(grid(days))
     peak = max(1, max(x[2] for x in cells))
-    W, H, cx, cy, R, dr, tilt, hmax = 1200, 340, 600, 236, 400, 14, 0.2, 120
+    W, H, cx, cy, R, dr, tilt, hmax = 1400, 260, 700, 176, 470, 14, 0.16, 90
     nweeks = max(x[0] for x in cells) + 1
     bw, bd, bn = busiest(cells)
     def proj(wk, wd, t):
@@ -196,15 +196,15 @@ def ring(days, theme, frames=24, dur=36):
         spikes.append(f'<line x1="{vals["x1"][0]}" x2="{vals["x1"][0]}" y1="{vals["y1"][0]}" y2="{vals["y2"][0]}" stroke="{c["lamp"] if hot else c["mesh"]}" stroke-width="{6 if hot else 4.5}" stroke-linecap="round">{anim}</line>')
     floor = "".join(f'<ellipse cx="{cx}" cy="{cy}" rx="{R + k * dr}" ry="{(R + k * dr) * tilt:.1f}" fill="none" stroke="{c["line"]}" stroke-width="1"/>' for k in (-3, 0, 3))
     win = window(days)
-    Ht = H - 20 + TOP
-    body = framed(c, W, Ht, "Contribution ring", win, f'<g transform="translate(0 -20)">{floor}{"".join(spikes)}</g>')
+    Ht = H + TOP
+    body = framed(c, W, Ht, "Contribution ring", win, f'{floor}{"".join(spikes)}')
     return svg(W, Ht, f"Contribution ring, {win}: one spike per active day, taller means more contributions. Busiest day (orange): {bn}.", body)
 
 # ---- languages card -----------------------------------------------------------------------
 def languages(langs, theme, frameworks=("React", "Three.js"), top=5):
     """langs: [(name, bytes)] sorted desc, already filtered. Shares are of all listed bytes."""
     c = PAL[theme]
-    W, H = 1200, 250
+    W, H = 1400, 170  # same scale as the project cards
     total = sum(b for _, b in langs) or 1
     shown = langs[:top]
     ramp = (["#DCE6E0", "#A9BDB3", "#7C9A8C", "#56705F", "#3A5247"] if theme == "dark"
@@ -212,23 +212,24 @@ def languages(langs, theme, frameworks=("React", "Three.js"), top=5):
     x, bar_w, segs, items, lx = 48.0, W - 96, [], [], 48.0
     for i, (name, b) in enumerate(shown):
         w = bar_w * b / total
-        segs.append(f'<rect x="{x:.1f}" y="88" width="{max(w, 3):.1f}" height="22" fill="{ramp[i]}"/>')
+        segs.append(f'<rect x="{x:.1f}" y="80" width="{max(w, 3):.1f}" height="18" fill="{ramp[i]}"/>')
         x += w
         label = f"{name} {100 * b / total:.1f}%"
-        items.append(f'<rect x="{lx:.0f}" y="140" width="18" height="18" rx="4" fill="{ramp[i]}"/>'
-                     f'<text x="{lx + 28:.0f}" y="157" font-family="{FONT}" font-size="24" font-weight="500" fill="{c["ink"]}">{esc(name)}'
+        items.append(f'<rect x="{lx:.0f}" y="125" width="18" height="18" rx="4" fill="{ramp[i]}"/>'
+                     f'<text x="{lx + 28:.0f}" y="142" font-family="{FONT}" font-size="24" font-weight="500" fill="{c["ink"]}">{esc(name)}'
                      f'<tspan fill="{c["soft"]}"> {100 * b / total:.1f}%</tspan></text>')
         lx += 28 + 12.5 * len(label) + 44  # shortcut: estimated glyph width; fine for short language names
-    chips, cx = [], 48 + 150
-    for fw in frameworks:
-        wpx = 26 + 13 * len(fw)
-        chips.append(f'<rect x="{cx}" y="182" width="{wpx}" height="38" rx="19" fill="none" stroke="{c["mesh"]}" stroke-width="2"/>'
-                     f'<text x="{cx + wpx / 2}" y="208" text-anchor="middle" font-family="{FONT}" font-size="21" font-weight="500" fill="{c["ink"]}">{esc(fw)}</text>')
-        cx += wpx + 12
+    chips, cx = [], W - 48  # framework chips sit right-aligned in the title row
+    for fw in reversed(frameworks):
+        wpx = 28 + 12.5 * len(fw)
+        cx -= wpx
+        chips.append(f'<rect x="{cx:.0f}" y="24" width="{wpx:.0f}" height="38" rx="19" fill="none" stroke="{c["mesh"]}" stroke-width="2"/>'
+                     f'<text x="{cx + wpx / 2:.0f}" y="50" text-anchor="middle" font-family="{FONT}" font-size="21" font-weight="500" fill="{c["ink"]}">{esc(fw)}</text>')
+        cx -= 12
     body = f'''{frame(c, W, H)}{heading(c, "Top languages", "public repos, by code size")}
-<clipPath id="bar"><rect x="48" y="88" width="{bar_w}" height="22" rx="11"/></clipPath>
-<rect x="48" y="88" width="{bar_w}" height="22" rx="11" fill="{c['line']}"/><g clip-path="url(#bar)">{"".join(segs)}</g>
-{"".join(items)}
-<text x="48" y="208" font-family="{FONT}" font-size="21" font-weight="500" fill="{c['soft']}">Built with</text>{"".join(chips)}'''
+<text x="{cx - 4:.0f}" y="50" text-anchor="end" font-family="{FONT}" font-size="21" font-weight="500" fill="{c['soft']}">Built with</text>{"".join(chips)}
+<clipPath id="bar"><rect x="48" y="80" width="{bar_w}" height="18" rx="9"/></clipPath>
+<rect x="48" y="80" width="{bar_w}" height="18" rx="9" fill="{c['line']}"/><g clip-path="url(#bar)">{"".join(segs)}</g>
+{"".join(items)}'''
     summary = ", ".join(f"{n} {100 * b / total:.1f}%" for n, b in shown)
     return svg(W, H, f"Top languages in public repos: {summary}. Built with {' and '.join(frameworks)}.", body)
