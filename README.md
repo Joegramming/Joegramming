@@ -32,7 +32,7 @@ I'm one of the developers behind **[Cre8tive Sync](https://cre8tivesync.online)*
   <img alt="AiCore: A handful of photos in, a measurable 3D crime-scene reconstruction out. (live)" src="https://raw.githubusercontent.com/Joegramming/Joegramming/main/assets/card-aicore-dark.svg" width="100%">
 </picture>
 
-<sub><a href="https://ai-core-cre8tivesync.vercel.app">Open AiCore ↗</a> · ai-core-cre8tivesync.vercel.app</sub>
+<sub><a href="https://ai-core-cre8tivesync.vercel.app">Open AiCore ↗</a></sub>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/main/assets/card-oxilia-dark.svg">
@@ -40,7 +40,7 @@ I'm one of the developers behind **[Cre8tive Sync](https://cre8tivesync.online)*
   <img alt="O-Xilia: Docs, projects, messages and calls in one workspace. (live)" src="https://raw.githubusercontent.com/Joegramming/Joegramming/main/assets/card-oxilia-dark.svg" width="100%">
 </picture>
 
-<sub><a href="https://www.oxilia.online/">Open O-Xilia ↗</a> · www.oxilia.online</sub>
+<sub><a href="https://www.oxilia.online/">Open O-Xilia ↗</a></sub>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/main/assets/card-gradebook-dark.svg">
@@ -48,7 +48,7 @@ I'm one of the developers behind **[Cre8tive Sync](https://cre8tivesync.online)*
   <img alt="gradebook-proto: Multi-subject gradebook with terms, weights and printable reports. (live)" src="https://raw.githubusercontent.com/Joegramming/Joegramming/main/assets/card-gradebook-dark.svg" width="100%">
 </picture>
 
-<sub><a href="https://joegramming.github.io/gradebook-proto/">Open gradebook-proto ↗</a> · joegramming.github.io/gradebook-proto</sub>
+<sub><a href="https://joegramming.github.io/gradebook-proto/">Open gradebook-proto ↗</a></sub>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/main/assets/card-purewater-dark.svg">
@@ -85,17 +85,17 @@ I'm one of the developers behind **[Cre8tive Sync](https://cre8tivesync.online)*
 
 <p align="center"><sub><b>Web and backend</b></sub><br>
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=html%2Ccss%2Cnextjs%2Cexpress%2Cflask%2Cfastapi%2Claravel%2Cdeno%2Cjquery&perline=9&theme=dark">
-  <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=html%2Ccss%2Cnextjs%2Cexpress%2Cflask%2Cfastapi%2Claravel%2Cdeno%2Cjquery&perline=9&theme=light">
-  <img alt="HTML, CSS, Next.js, Express, Flask, FastAPI, Laravel, Deno, jQuery" src="https://skillicons.dev/icons?i=html%2Ccss%2Cnextjs%2Cexpress%2Cflask%2Cfastapi%2Claravel%2Cdeno%2Cjquery&perline=9&theme=dark">
+  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=html%2Ccss%2Cnextjs%2Cexpress%2Cflask%2Cfastapi%2Claravel%2Cdeno%2Cjquery&perline=5&theme=dark">
+  <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=html%2Ccss%2Cnextjs%2Cexpress%2Cflask%2Cfastapi%2Claravel%2Cdeno%2Cjquery&perline=5&theme=light">
+  <img alt="HTML, CSS, Next.js, Express, Flask, FastAPI, Laravel, Deno, jQuery" src="https://skillicons.dev/icons?i=html%2Ccss%2Cnextjs%2Cexpress%2Cflask%2Cfastapi%2Claravel%2Cdeno%2Cjquery&perline=5&theme=dark">
 </picture>
 </p>
 
 <p align="center"><sub><b>Data and AI</b></sub><br>
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=postgres%2Cmysql%2Cmongodb%2Csqlite%2Cfirebase%2Ctensorflow%2Cpytorch%2Csklearn%2Copencv%2Canaconda&perline=10&theme=dark">
-  <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=postgres%2Cmysql%2Cmongodb%2Csqlite%2Cfirebase%2Ctensorflow%2Cpytorch%2Csklearn%2Copencv%2Canaconda&perline=10&theme=light">
-  <img alt="PostgreSQL, MySQL, MongoDB, SQLite, Firebase, TensorFlow, PyTorch, scikit-learn, OpenCV, Anaconda" src="https://skillicons.dev/icons?i=postgres%2Cmysql%2Cmongodb%2Csqlite%2Cfirebase%2Ctensorflow%2Cpytorch%2Csklearn%2Copencv%2Canaconda&perline=10&theme=dark">
+  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=postgres%2Cmysql%2Cmongodb%2Csqlite%2Cfirebase%2Ctensorflow%2Cpytorch%2Csklearn%2Copencv%2Canaconda&perline=5&theme=dark">
+  <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=postgres%2Cmysql%2Cmongodb%2Csqlite%2Cfirebase%2Ctensorflow%2Cpytorch%2Csklearn%2Copencv%2Canaconda&perline=5&theme=light">
+  <img alt="PostgreSQL, MySQL, MongoDB, SQLite, Firebase, TensorFlow, PyTorch, scikit-learn, OpenCV, Anaconda" src="https://skillicons.dev/icons?i=postgres%2Cmysql%2Cmongodb%2Csqlite%2Cfirebase%2Ctensorflow%2Cpytorch%2Csklearn%2Copencv%2Canaconda&perline=5&theme=dark">
 </picture>
 </p>
 
@@ -113,11 +113,7 @@ I'm one of the developers behind **[Cre8tive Sync](https://cre8tivesync.online)*
   <img alt="" src="https://raw.githubusercontent.com/Joegramming/Joegramming/main/assets/divider-dark.svg" width="100%">
 </picture>
 
-<h3><picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/main/assets/header-numbers-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/main/assets/header-numbers-light.svg">
-  <img alt="Numbers" src="https://raw.githubusercontent.com/Joegramming/Joegramming/main/assets/header-numbers-dark.svg" width="100%">
-</picture></h3>
+### Numbers
 
 <p><picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Joegramming/Joegramming/output/numbers-dark.svg">
@@ -147,7 +143,7 @@ I'm one of the developers behind **[Cre8tive Sync](https://cre8tivesync.online)*
 
 <div align="center">
 
-<a href="https://joegramming.github.io"><img alt="joegramming.github.io" src="https://img.shields.io/badge/joegramming.github.io-1F2D27?style=for-the-badge&labelColor=111B17&logoColor=F2A33A&logo=githubpages"></a> <a href="https://cre8tivesync.online"><img alt="Cre8tive Sync" src="https://img.shields.io/badge/Cre8tive_Sync-1F2D27?style=for-the-badge&labelColor=111B17&logoColor=F2A33A"></a> <a href="mailto:jojoliwag4@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Email-1F2D27?style=for-the-badge&labelColor=111B17&logoColor=F2A33A&logo=gmail"></a> <a href="https://www.facebook.com/johannliwagg"><img alt="Facebook" src="https://img.shields.io/badge/Facebook-1F2D27?style=for-the-badge&labelColor=111B17&logoColor=F2A33A&logo=facebook"></a>
+<a href="https://joegramming.github.io"><img alt="joegramming.github.io" src="https://img.shields.io/badge/joegramming.github.io-1F2D27?style=for-the-badge&labelColor=111B17&logoColor=F2A33A&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjJBMzNBIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTAgMTNhNSA1IDAgMCAwIDcuNTQuNTRsMy0zYTUgNSAwIDAgMC03LjA3LTcuMDdsLTEuNzIgMS43MSIvPjxwYXRoIGQ9Ik0xNCAxMWE1IDUgMCAwIDAtNy41NC0uNTRsLTMgM2E1IDUgMCAwIDAgNy4wNyA3LjA3bDEuNzEtMS43MSIvPjwvc3ZnPg%3D%3D"></a> <a href="https://cre8tivesync.online"><img alt="Cre8tive Sync" src="https://img.shields.io/badge/Cre8tive_Sync-1F2D27?style=for-the-badge&labelColor=111B17&logoColor=F2A33A"></a> <a href="mailto:jojoliwag4@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Email-1F2D27?style=for-the-badge&labelColor=111B17&logoColor=F2A33A&logo=gmail"></a> <a href="https://www.facebook.com/johannliwagg"><img alt="Facebook" src="https://img.shields.io/badge/Facebook-1F2D27?style=for-the-badge&labelColor=111B17&logoColor=F2A33A&logo=facebook"></a>
 
 <sub>previously <a href="https://github.com/wehejojo">@wehejojo</a></sub>
 

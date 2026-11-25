@@ -80,23 +80,20 @@ def svg(w, h, title, body):
 def esc(s):
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
-def heading(c, title, sub):
-    return (f'<text x="48" y="54" font-family="{FONT}" font-size="31" font-weight="500" fill="{c["ink"]}">{esc(title)}'
-            f'<tspan font-weight="500" fill="{c["soft"]}"> — {esc(sub)}</tspan></text>')
+def heading(c, title, sub=None):
+    tail = f'<tspan font-weight="500" fill="{c["soft"]}"> — {esc(sub)}</tspan>' if sub else ""
+    return f'<text x="48" y="54" font-family="{FONT}" font-size="31" font-weight="500" fill="{c["ink"]}">{esc(title)}{tail}</text>'
 
 def legend(c, W, busiest_label="busiest day"):
-    """Right-aligned: fewer [ramp] more · [amber] busiest day."""
+    """Right-aligned: [shade ramp] · [amber] busiest day. Words kept to one label so it stays legible on phones."""
     x = W - 48
-    out = [f'<text x="{x}" y="52" text-anchor="end" font-family="{FONT}" font-size="21" font-weight="500" fill="{c["soft"]}">{busiest_label}</text>']
-    x -= 150
-    out.append(f'<rect x="{x}" y="35" width="18" height="18" rx="4" fill="{c["lamp"]}"/>')
-    x -= 24
-    out.append(f'<text x="{x}" y="52" text-anchor="end" font-family="{FONT}" font-size="21" font-weight="500" fill="{c["soft"]}">more</text>')
-    x -= 82
+    out = [f'<text x="{x}" y="53" text-anchor="end" font-family="{FONT}" font-size="25" font-weight="500" fill="{c["soft"]}">{busiest_label}</text>']
+    x -= 178
+    out.append(f'<rect x="{x}" y="33" width="22" height="22" rx="5" fill="{c["lamp"]}"/>')
+    x -= 46
     for col in reversed(c["levels"][1:]):
-        out.append(f'<rect x="{x}" y="35" width="18" height="18" rx="4" fill="{col}"/>')
-        x -= 24
-    out.append(f'<text x="{x + 16}" y="52" text-anchor="end" font-family="{FONT}" font-size="21" font-weight="500" fill="{c["soft"]}">fewer</text>')
+        out.append(f'<rect x="{x}" y="33" width="22" height="22" rx="5" fill="{col}"/>')
+        x -= 28
     return "".join(out)
 
 def framed(c, W, H, title, sub, inner, with_legend=True):
@@ -215,19 +212,19 @@ def languages(langs, theme, frameworks=("React", "Three.js"), top=5):
         segs.append(f'<rect x="{x:.1f}" y="80" width="{max(w, 3):.1f}" height="18" fill="{ramp[i]}"/>')
         x += w
         label = f"{name} {100 * b / total:.1f}%"
-        items.append(f'<rect x="{lx:.0f}" y="125" width="18" height="18" rx="4" fill="{ramp[i]}"/>'
-                     f'<text x="{lx + 28:.0f}" y="142" font-family="{FONT}" font-size="24" font-weight="500" fill="{c["ink"]}">{esc(name)}'
+        items.append(f'<rect x="{lx:.0f}" y="122" width="22" height="22" rx="5" fill="{ramp[i]}"/>'
+                     f'<text x="{lx + 32:.0f}" y="142" font-family="{FONT}" font-size="27" font-weight="500" fill="{c["ink"]}">{esc(name)}'
                      f'<tspan fill="{c["soft"]}"> {100 * b / total:.1f}%</tspan></text>')
-        lx += 28 + 12.5 * len(label) + 44  # shortcut: estimated glyph width; fine for short language names
+        lx += 32 + 14 * len(label) + 40  # shortcut: estimated glyph width; fine for short language names
     chips, cx = [], W - 48  # framework chips sit right-aligned in the title row
     for fw in reversed(frameworks):
-        wpx = 28 + 12.5 * len(fw)
+        wpx = 32 + 14 * len(fw)
         cx -= wpx
-        chips.append(f'<rect x="{cx:.0f}" y="24" width="{wpx:.0f}" height="38" rx="19" fill="none" stroke="{c["mesh"]}" stroke-width="2"/>'
-                     f'<text x="{cx + wpx / 2:.0f}" y="50" text-anchor="middle" font-family="{FONT}" font-size="21" font-weight="500" fill="{c["ink"]}">{esc(fw)}</text>')
+        chips.append(f'<rect x="{cx:.0f}" y="22" width="{wpx:.0f}" height="42" rx="21" fill="none" stroke="{c["mesh"]}" stroke-width="2"/>'
+                     f'<text x="{cx + wpx / 2:.0f}" y="52" text-anchor="middle" font-family="{FONT}" font-size="25" font-weight="500" fill="{c["ink"]}">{esc(fw)}</text>')
         cx -= 12
-    body = f'''{frame(c, W, H)}{heading(c, "Top languages", "public repos, by code size")}
-<text x="{cx - 4:.0f}" y="50" text-anchor="end" font-family="{FONT}" font-size="21" font-weight="500" fill="{c['soft']}">Built with</text>{"".join(chips)}
+    body = f'''{frame(c, W, H)}{heading(c, "Top languages")}
+<text x="{cx - 4:.0f}" y="52" text-anchor="end" font-family="{FONT}" font-size="25" font-weight="500" fill="{c['soft']}">Built with</text>{"".join(chips)}
 <clipPath id="bar"><rect x="48" y="80" width="{bar_w}" height="18" rx="9"/></clipPath>
 <rect x="48" y="80" width="{bar_w}" height="18" rx="9" fill="{c['line']}"/><g clip-path="url(#bar)">{"".join(segs)}</g>
 {"".join(items)}'''
